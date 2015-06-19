@@ -8,7 +8,7 @@ import static org.mockito.Mockito.verify;
 /**
  * Created by eugenew on 6/19/15.
  */
-public class ListBooksCommandTest {
+public class ListBooksCommandTest{
 
 
 
