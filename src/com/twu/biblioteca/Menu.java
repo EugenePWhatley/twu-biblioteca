@@ -3,6 +3,8 @@ package com.twu.biblioteca;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by angoh on 6/17/15.
@@ -48,8 +50,11 @@ public class Menu {
 
     public void selectOption(String selection) {
         selection = selection.toLowerCase();
+        Map<String, BibliotecaCommand> commandMap = new HashMap<String, BibliotecaCommand>();
+        commandMap.put("list books", new ListBooksCommand(biblioteca));
+
         if (selection.contains("list books")) {
-            biblioteca.listBooks();
+            commandMap.get(selection).execute();
         }
         else if (selection.contains("checkout book")){
             boolean checkout = biblioteca.checkoutBooks(selection.replace("checkout book", "").trim());
