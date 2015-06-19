@@ -1,9 +1,7 @@
 package com.twu.biblioteca;
 
 import java.io.*;
-import java.nio.Buffer;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Created by egalperi on 6/16/15.
@@ -30,7 +28,7 @@ public class Biblioteca {
     }
 
 
-    public boolean checkout(Book book) {
+    public boolean checkoutBooks(Book book) {
         if(book.isCheckedOut()){
             return false;
         }
@@ -38,10 +36,10 @@ public class Biblioteca {
         return true;
     }
 
-    public boolean checkout(String bookTitle){
+    public boolean checkoutBooks(String bookTitle){
         for(Book book: books){
             if(book.title().equalsIgnoreCase(bookTitle)){
-                return checkout(book);
+                return checkoutBooks(book);
             }
         }
         return false;
@@ -67,5 +65,22 @@ public class Biblioteca {
             }
         }
         printStream.println("");
+    }
+
+    public boolean checkoutMovie(String movieTitle) {
+        for(Movie movie: movies){
+            if(movie.title().equalsIgnoreCase(movieTitle)){
+                return checkoutMovie(movie);
+            }
+        }
+        return false;
+    }
+
+    public boolean checkoutMovie(Movie movie) {
+        if(movie.isCheckedOut()){
+            return false;
+        }
+        movie.checkOut();
+        return true;
     }
 }

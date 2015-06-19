@@ -50,8 +50,8 @@ public class Menu {
         if (selection.contains("list books")) {
             biblioteca.listBooks();
         }
-        else if (selection.contains("checkout")){
-            boolean checkout = biblioteca.checkout(selection.replace("checkout","").trim());
+        else if (selection.contains("checkoutBooks")){
+            boolean checkout = biblioteca.checkoutBooks(selection.replace("checkoutBooks", "").trim());
             if(checkout) {
                 printStream.println("Success! Enjoy your book.");
             }else{
@@ -61,8 +61,8 @@ public class Menu {
         else if (selection.contains("list movies")){
             biblioteca.listMovies();
         }
-        else if (selection.contains("checkout")){
-            boolean checkout = biblioteca.checkout(selection.replace("checkout","").trim());
+        else if (selection.contains("checkoutBooks")){
+            boolean checkout = biblioteca.checkoutBooks(selection.replace("checkoutBooks", "").trim());
             if(checkout) {
                 printStream.println("Success! Enjoy your book.");
             }else{

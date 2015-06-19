@@ -76,19 +76,19 @@ public class MenuTest {
     @Test
     public void shouldCheckoutBookWithGivenTitle(){
         menu.selectOption("checKout " + itemTitle);
-        verify(biblioteca).checkout(itemTitle.toLowerCase());
+        verify(biblioteca).checkoutBooks(itemTitle.toLowerCase());
     }
 
     @Test
     public void shouldLetUserKnowWhenCheckoutFails(){
-        when(biblioteca.checkout(itemTitle)).thenReturn(false);
+        when(biblioteca.checkoutBooks(itemTitle)).thenReturn(false);
         menu.selectOption("checKout " + itemTitle);
         verify(printStream).println("Could not check out book with that title.");
     }
 
     @Test
     public void shouldLetUserKnowWhenCheckoutIsSuccessful(){
-        when(biblioteca.checkout(itemTitle.toLowerCase())).thenReturn(true);
+        when(biblioteca.checkoutBooks(itemTitle.toLowerCase())).thenReturn(true);
         menu.selectOption("checKout " + itemTitle);
         verify(printStream).println(contains("Success"));
     }
