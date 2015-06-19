@@ -28,9 +28,10 @@ public class Menu {
         printStream.println("MAIN MENU");
         printStream.println("- List Books");
         printStream.println("- List Movies");
-        printStream.println("- Quit");
-        printStream.println("- Checkout [book title]");
+        printStream.println("- Checkout Book [book title]");
+        printStream.println("- Checkout Movie [movie title]");
         printStream.println("- Return [book title]");
+        printStream.println("- Quit");
         printStream.println("Enter your selection");
     }
 
@@ -50,8 +51,8 @@ public class Menu {
         if (selection.contains("list books")) {
             biblioteca.listBooks();
         }
-        else if (selection.contains("checkoutBooks")){
-            boolean checkout = biblioteca.checkoutBooks(selection.replace("checkoutBooks", "").trim());
+        else if (selection.contains("checkout book")){
+            boolean checkout = biblioteca.checkoutBooks(selection.replace("checkout book", "").trim());
             if(checkout) {
                 printStream.println("Success! Enjoy your book.");
             }else{
@@ -61,12 +62,12 @@ public class Menu {
         else if (selection.contains("list movies")){
             biblioteca.listMovies();
         }
-        else if (selection.contains("checkoutBooks")){
-            boolean checkout = biblioteca.checkoutBooks(selection.replace("checkoutBooks", "").trim());
+        else if (selection.contains("checkout movie")){
+            boolean checkout = biblioteca.checkoutMovie(selection.replace("checkout movie", "").trim());
             if(checkout) {
-                printStream.println("Success! Enjoy your book.");
+                printStream.println("Success! Enjoy your movie.");
             }else{
-                printStream.println("Could not check out book with that title.");
+                printStream.println("Could not check out movie with that title.");
             }
         }
         else if (selection.contains("return")) {
