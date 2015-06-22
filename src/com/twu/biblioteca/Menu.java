@@ -15,13 +15,15 @@ public class Menu {
     private PrintStream printStream;
     private boolean stillAlive;
     private final Map<String, BibliotecaCommand> commandMap;
+    private ListBooksCommand listBooksCommand;
 
-    public Menu(PrintStream printStream, Biblioteca biblioteca, BufferedReader reader){
+    public Menu(PrintStream printStream, Biblioteca biblioteca, BufferedReader reader, Map<String, BibliotecaCommand> commandMap, ListBooksCommand listBooksCommand){
         this.printStream = printStream;
         this.biblioteca = biblioteca;
         this.reader = reader;
         this.stillAlive = true;
-        commandMap = new HashMap<String, BibliotecaCommand>();
+        this.commandMap = commandMap;
+        this.listBooksCommand = listBooksCommand;
     }
 
     public boolean isStillAlive() {
@@ -53,7 +55,7 @@ public class Menu {
     public void selectOption(String selection) {
         selection = selection.toLowerCase();
         try{
-        commandMap.put("list books", new ListBooksCommand(biblioteca));
+            commandMap.put("list books", listBooksCommand);
         commandMap.put("checkout book", new CheckOutBooksCommand(biblioteca, printStream, reader));
         commandMap.put("list movies", new ListMoviesCommand(biblioteca));
         commandMap.put("checkout movie", new CheckOutMovieCommand(biblioteca, printStream, reader));

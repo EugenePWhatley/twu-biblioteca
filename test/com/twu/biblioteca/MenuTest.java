@@ -7,7 +7,8 @@ import org.junit.Test;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.mockito.Matchers.contains;
@@ -21,20 +22,19 @@ public class MenuTest {
     private BufferedReader reader;
     private PrintStream printStream;
     private Biblioteca biblioteca;
-    private List<LibraryItem> items;
     private Menu menu;
-    private BibliotecaApp bibliotecaApp;
-    private String itemTitle;
+    private Map<String, BibliotecaCommand> commandMap;
+    private ListBooksCommand listBooksCommand;
 
     @Before
     public void setUp() throws IOException{
         reader = mock(BufferedReader.class);
         printStream = mock(PrintStream.class);
         biblioteca = mock(Biblioteca.class);
-        menu = new Menu(printStream, biblioteca, reader);
+        listBooksCommand = mock(ListBooksCommand.class);
+        commandMap = new HashMap<String, BibliotecaCommand>();
+        menu = new Menu(printStream, biblioteca, reader, commandMap, listBooksCommand);
         when(reader.readLine()).thenReturn("list items");
-        bibliotecaApp = mock(BibliotecaApp.class);
-        itemTitle = "Akon's Thesis";
     }
 
     @Test
@@ -50,73 +50,11 @@ public class MenuTest {
     }
 
     @Test
-    public void shouldHandleValidUserInput(){
-        menu.selectOption("LISt books");
-        verify(biblioteca).listBooks();
-    }
+    public void shouldHandleValidUserInput() {
+        String selection = "list books";
 
-    @Test
-    public void shouldIncludeQuitInMenuOption(){
-        menu.displayMenu();
-        verify(printStream).println(contains("Quit"));
-    }
+        menu.selectOption(selection);
 
-    @Test
-    public void shouldIncludeReturnBookInMenuOption(){
-        menu.displayMenu();
-        verify(printStream).println(contains("Return"));
-    }
-
-    @Test
-    public void shouldReturnBookWithGivenTitle(){
-        menu.selectOption("return " + itemTitle);
-        verify(biblioteca).returnBook(itemTitle.toLowerCase());
-    }
-
-    @Test
-    public void shouldCheckoutBookWithGivenTitle(){
-        menu.selectOption("checkout book " + itemTitle);
-        verify(biblioteca).checkoutBooks(itemTitle.toLowerCase());
-    }
-
-    @Test
-    public void shouldLetUserKnowWhenCheckoutFails() {
-        when(biblioteca.checkoutBooks(itemTitle)).thenReturn(false);
-        menu.selectOption("checKout book " + itemTitle);
-        verify(printStream).println("Could not check out book with that title.");
-
-    }
-
-    @Test
-    public void shouldCheckoutMovieWithGivenTitle(){
-        menu.selectOption("checKout movie " + itemTitle);
-        verify(biblioteca).checkoutMovie(itemTitle.toLowerCase());
-    }
-
-    @Test
-    public void shouldLetUserKnowWhenCheckoutIsSuccessful(){
-        when(biblioteca.checkoutBooks(itemTitle.toLowerCase())).thenReturn(true);
-        menu.selectOption("checKout book" + itemTitle);
-        verify(printStream).println(contains("Success"));
-    }
-
-    @Test
-    public void shouldQuitApplicationWhenQuitIsSelected(){
-        menu.selectOption("Quit");
-        assertFalse(menu.isStillAlive());
-    }
-
-    @Test
-    public void shouldLetUserKnowReturnisSuccessful(){
-        when(biblioteca.returnBook(itemTitle.toLowerCase())).thenReturn(true);
-        menu.selectOption("return " + itemTitle);
-        verify(printStream).println(contains("success"));
-    }
-
-    @Test
-    public void shouldLetUserKnowReturnisUnsuccessful(){
-        when(biblioteca.returnBook(itemTitle.toLowerCase())).thenReturn(false);
-        menu.selectOption("return " + itemTitle);
-        verify(printStream).println(contains("not return"));
+        verify(listBooksCommand).execute();
     }
 }
