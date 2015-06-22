@@ -20,5 +20,4 @@ public class QuitCommandTest {
 
         verify(menu).quit();
     }
-
 }

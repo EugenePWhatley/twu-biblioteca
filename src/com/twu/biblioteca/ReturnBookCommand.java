@@ -5,14 +5,14 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 /**
- * Created by eugenew on 6/19/15.
+ * Created by eugenew on 6/22/15.
  */
-public class CheckOutBooksCommand implements BibliotecaCommand {
+public class ReturnBookCommand implements BibliotecaCommand{
     private Biblioteca biblioteca;
     private PrintStream printStream;
     private BufferedReader reader;
 
-    public CheckOutBooksCommand(Biblioteca biblioteca, PrintStream printStream, BufferedReader reader) {
+    public ReturnBookCommand(Biblioteca biblioteca, PrintStream printStream, BufferedReader reader) {
         this.biblioteca = biblioteca;
         this.printStream = printStream;
         this.reader = reader;
@@ -20,23 +20,23 @@ public class CheckOutBooksCommand implements BibliotecaCommand {
 
     @Override
     public void execute() {
-        printStream.println("Enter book selection: ");
+        printStream.println("Enter Book to return:");
         String bookTitle = readLine();
-        boolean checkout = biblioteca.checkoutBooks(bookTitle);
-        if(checkout) {
-            printStream.println("Success! Enjoy your book.");
+        boolean bool = biblioteca.returnBook(bookTitle);
+        if(bool){
+            printStream.println("You have successfully returned this book");
         }else{
-            printStream.println("Could not check out book with that title.");
+            printStream.println("Sorry, could not return that book.");
         }
     }
 
     private String readLine() {
-        String input = "";
+        String bookTitle = "";
         try {
-            input = reader.readLine();
+            bookTitle = reader.readLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return input;
+        return bookTitle;
     }
 }
