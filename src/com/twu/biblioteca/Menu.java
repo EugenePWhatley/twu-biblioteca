@@ -6,6 +6,8 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.mockito.Matchers.contains;
+
 /**
  * Created by angoh on 6/17/15.
  */
@@ -52,20 +54,19 @@ public class Menu {
         selection = selection.toLowerCase();
         Map<String, BibliotecaCommand> commandMap = new HashMap<String, BibliotecaCommand>();
         commandMap.put("list books", new ListBooksCommand(biblioteca));
+//        commandMap.put(contains("checkout book"), new CheckOutBooksCommand(biblioteca, printStream, selection.replace("checkout book", "").trim()));
+        commandMap.put("list movies", new ListMoviesCommand(biblioteca));
+//        commandMap.put("checkout movies", new CheckOutMovieCommand(biblioteca));
+        commandMap.put("quit", new QuitCommand(this));
 
         if (selection.contains("list books")) {
             commandMap.get(selection).execute();
         }
         else if (selection.contains("checkout book")){
-            boolean checkout = biblioteca.checkoutBooks(selection.replace("checkout book", "").trim());
-            if(checkout) {
-                printStream.println("Success! Enjoy your book.");
-            }else{
-                printStream.println("Could not check out book with that title.");
-            }
+            commandMap.get(selection).execute();
         }
         else if (selection.contains("list movies")){
-            biblioteca.listMovies();
+            commandMap.get(selection).execute();
         }
         else if (selection.contains("checkout movie")){
             boolean checkout = biblioteca.checkoutMovie(selection.replace("checkout movie", "").trim());
@@ -84,10 +85,14 @@ public class Menu {
             }
         }
         else if (selection.contains("quit")) {
-            stillAlive = false;
+            commandMap.get(selection).execute();
         }
         else{
             printStream.println("That's not a valid option");
         }
+    }
+
+    public void quit() {
+        stillAlive = false;
     }
 }

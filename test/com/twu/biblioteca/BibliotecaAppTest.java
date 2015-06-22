@@ -19,8 +19,6 @@ import static org.mockito.Mockito.*;
 public class BibliotecaAppTest {
     private BufferedReader reader;
     private PrintStream printStream;
-    private Biblioteca biblioteca;
-    private List<Book> books;
     private Menu menu;
     private BibliotecaApp bibliotecaApp;
 
@@ -28,8 +26,6 @@ public class BibliotecaAppTest {
     public void setUp() throws IOException {
         reader = mock(BufferedReader.class);
         printStream = mock(PrintStream.class);
-        books = new ArrayList<Book>();
-//        biblioteca = mock(Biblioteca.class);
         menu = mock(Menu.class);
         when(reader.readLine()).thenReturn("list books");
         bibliotecaApp = new BibliotecaApp(printStream, menu);

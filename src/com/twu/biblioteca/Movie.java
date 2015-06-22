@@ -9,8 +9,8 @@ public class Movie extends LibraryItem {
 
     private String rating;
 
-    public Movie(String title, String author, String yearPublished, String rating) {
-        super(title, author, yearPublished);
+    public Movie(String title, String director, String yearPublished, String rating) {
+        super(title, director, yearPublished);
         this.rating = rating;
     }
 
