@@ -33,7 +33,12 @@ public class BibliotecaApp {
         Biblioteca biblioteca = new Biblioteca(printStream, books, movies);
         ListBooksCommand listBooksCommand = new ListBooksCommand(biblioteca);
         Map<String, BibliotecaCommand> commandMap = new HashMap<String, BibliotecaCommand>();
-        Menu menu = new Menu(System.out, biblioteca, reader, commandMap, listBooksCommand);
+        commandMap.put("list books", listBooksCommand);
+        commandMap.put("checkout book", new CheckOutBooksCommand(biblioteca, printStream, reader));
+        commandMap.put("list movies", new ListMoviesCommand(biblioteca));
+        commandMap.put("checkout movie", new CheckOutMovieCommand(biblioteca, printStream, reader));
+        commandMap.put("return", new ReturnBookCommand(biblioteca, printStream, reader));
+        Menu menu = new Menu(System.out, biblioteca, reader, commandMap);
         BibliotecaApp bibliotecaApp = new BibliotecaApp(printStream, menu);
 
         bibliotecaApp.start();

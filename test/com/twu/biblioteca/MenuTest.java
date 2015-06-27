@@ -33,7 +33,8 @@ public class MenuTest {
         biblioteca = mock(Biblioteca.class);
         listBooksCommand = mock(ListBooksCommand.class);
         commandMap = new HashMap<String, BibliotecaCommand>();
-        menu = new Menu(printStream, biblioteca, reader, commandMap, listBooksCommand);
+        commandMap.put("list books",listBooksCommand);
+        menu = new Menu(printStream, biblioteca, reader, commandMap);
         when(reader.readLine()).thenReturn("list items");
     }
 
@@ -55,6 +56,6 @@ public class MenuTest {
 
         menu.selectOption(selection);
 
-        verify(listBooksCommand).execute();
+        verify(commandMap.get(selection)).execute();
     }
 }
